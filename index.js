@@ -60,6 +60,7 @@ walk(__dirname, function (err, results) {
 		});
 	});
 });
+//add comment
 //module.exports = currentFile;
 		// files.forEach(function (file) {
 		// 	console.log(file);
