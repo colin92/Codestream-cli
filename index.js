@@ -2,21 +2,26 @@
 
 var fs = require("fs");
 var path = require("path");
-var Git = require("nodegit");
+//var Git = require("nodegit");
+var git = require('gift');
 
-var pathToRepo = path.resolve(__dirname);
+var repo = git(__dirname);
 
-Git.Repository.open(pathToRepo).then(function (repo) {
-	console.log(repo);
-});
+// var pathToRepo = path.resolve(_dirname, './.git');
 
-var getMostRecentCommit = function(repository) {
-	return repository.getBranchCommit("master");
-};
+// Git.Repository.open(pathToRepo)
+// 	.then(function (repo) {
+// 		return repo.openIndex();
+// 	})
+// 	.then()
 
-var getCommitMessage = function(commit) {
-	return commit.message();
-}
+// var getMostRecentCommit = function(repository) {
+// 	return repository.getBranchCommit("master");
+// };
+
+// var getCommitMessage = function(commit) {
+// 	return commit.message();
+// }
 
 var walk = function (dir, done) {
 	var results = [];
@@ -41,16 +46,18 @@ var walk = function (dir, done) {
 	});
 }
 
-// walk(__dirname, function (err, results) {
-// 	results.forEach(function (file) {
-// 		fs.watchFile(file, function (err, data) {
-// 			fs.readFile(file, {encoding: 'utf-8'}, function (err, watchedFile) {
-// 				console.log(watchedFile);
-// 			});
-// 		});
-// 	});
-// });
-//addcomment
+walk(__dirname, function (err, results) {
+	results.forEach(function (file) {
+		fs.watchFile(file, function (err, data) {
+			fs.readFile(file, {encoding: 'utf-8'}, function (err, watchedFile) {
+				repo.commit("File Updated", {all: true}, function (err) {
+					console.log(err);
+				});
+			});
+		});
+	});
+});
+//add comment
 //module.exports = currentFile;
 		// files.forEach(function (file) {
 		// 	console.log(file);
