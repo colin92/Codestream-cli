@@ -53,14 +53,13 @@ walk(__dirname, function (err, results) {
 			repo.add('--all', function (err) {
 				repo.commit('File Updated', function (err) {
 					repo.commits(function (err, commits) {
-						console.log(commits);
+						return commits;
 					});
 				});
 			});
 		});
 	});
 });
-//add comment
 //module.exports = currentFile;
 		// files.forEach(function (file) {
 		// 	console.log(file);
