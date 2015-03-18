@@ -52,13 +52,11 @@ walk(__dirname, function (err, results) {
 		fs.watchFile(file, function (err, data) {
 			repo.add('--all', function (err) {
 				repo.commit('File Updated', function (err) {
-					console.log(err);
 				});
 			});
 		});
 	});
 });
-//add comment
 //module.exports = currentFile;
 		// files.forEach(function (file) {
 		// 	console.log(file);
