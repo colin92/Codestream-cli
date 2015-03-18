@@ -49,7 +49,7 @@ var walk = function (dir, done) {
 
 walk(__dirname, function (err, results) {
 	results.forEach(function (file) {
-		fs.watchFile(file, function (err, data) {
+		fs.watch(file, function (event, filename) {
 			repo.add('--all', function (err) {
 				repo.commit('File Updated', function (err) {
 					repo.commits(function (err, commits) {
@@ -60,7 +60,7 @@ walk(__dirname, function (err, results) {
 		});
 	});
 });
-//add comments
+//add comment
 //module.exports = currentFile;
 		// files.forEach(function (file) {
 		// 	console.log(file);
