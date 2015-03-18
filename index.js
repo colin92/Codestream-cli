@@ -2,6 +2,7 @@
 
 var fs = require("fs");
 var path = require("path");
+
 //var Git = require("nodegit");
 var git = require('gift');
 
@@ -49,14 +50,15 @@ var walk = function (dir, done) {
 walk(__dirname, function (err, results) {
 	results.forEach(function (file) {
 		fs.watchFile(file, function (err, data) {
-			fs.readFile(file, {encoding: 'utf-8'}, function (err, watchedFile) {
-				repo.commit("File Updated", {all: true}, function (err) {
+			repo.add('--all', function (err) {
+				repo.commit('File Updated', function (err) {
 					console.log(err);
 				});
 			});
 		});
 	});
 });
+//add comment
 //module.exports = currentFile;
 		// files.forEach(function (file) {
 		// 	console.log(file);
