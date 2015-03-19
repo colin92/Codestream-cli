@@ -13,16 +13,16 @@ dir.files(__dirname, function (err, files) {
 			fs.watch(file, function (event, filename) {
 				repo.add("--all", function (err) {
 					repo.commit("File Updated", function (err) {
-						repo.remotes(function (err, remotes) {
-							console.log(remotes);
-						});
+						console.log(err);
+						// repo.remotes(function (err, remotes) {
+						// 	console.log(remotes);
+						// });
 					});
 				});
 			});
 		}
 	});
 });
-//add comment
 // var walk = function (dir, done) {
 // 	var results = [];
 // 	fs.readdir(dir, function (err, files) {
