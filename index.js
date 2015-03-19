@@ -23,6 +23,7 @@ dir.files(__dirname, function (err, files) {
 		}
 	});
 });
+//add comment
 // var walk = function (dir, done) {
 // 	var results = [];
 // 	fs.readdir(dir, function (err, files) {
