@@ -10,7 +10,7 @@ dir.files(__dirname, function (err, files) {
 	if (err) throw err;
 	files.forEach(function (file) {
 		if (!file.match(/node_modules/) && !file.match(/.git/)) {
-			fs.watch(file, function (event, filename) {
+			fs.watch(file, function (event) {
 				repo.add("--all", function (err) {
 					repo.commit("File Updated", function (err) {
 						repo.remote_push('origin', function (err, remotes) {
