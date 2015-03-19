@@ -12,8 +12,8 @@ dir.files(__dirname, function (err, files) {
 		if (!file.match(/node_modules/) && !file.match(/.git/)) {
 			fs.watchFile(file, function (curr, prev) {
 				 repo.add(file, function (err) {
-				 	console.log("file", file);
 				 	 repo.commit("File Updated", function (err) {
+				 	 	console.log('committed');
 				// 		repo.remote_list(function (err, remotes) {
 				// 		});
 				 	 });
