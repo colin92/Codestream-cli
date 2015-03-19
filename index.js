@@ -6,10 +6,6 @@ var git = require('gift');
 var dir = require("node-dir");
 var repo = git(__dirname);
 
-repo.remotes(function (err, remotes) {
-	console.log(remotes);
-});
-
 dir.files(__dirname, function (err, files) {
 	if (err) throw err;
 	files.forEach(function (file) {
