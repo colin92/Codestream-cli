@@ -2,27 +2,24 @@
 
 var fs = require("fs");
 var path = require("path");
-
-//var Git = require("nodegit");
 var git = require('gift');
-
+var dir = require("node-dir");
 var repo = git(__dirname);
 
-// var pathToRepo = path.resolve(_dirname, './.git');
-
-// Git.Repository.open(pathToRepo)
-// 	.then(function (repo) {
-// 		return repo.openIndex();
-// 	})
-// 	.then()
-
-// var getMostRecentCommit = function(repository) {
-// 	return repository.getBranchCommit("master");
-// };
-
-// var getCommitMessage = function(commit) {
-// 	return commit.message();
-// }
+dir.files(__dirname, function (err, files) {
+	if (err) throw err;
+	files.forEach(function (file) {
+		if (!file.match(/node_modules/) && !file.match(/.git/)) {
+			fs.watch(file, function (event, filename) {
+				repo.add("--all", function (err) {
+					repo.commit("File Updated", function (err) {
+						console.log(err);
+					});
+				});
+			});
+		}
+	});
+});
 
 var walk = function (dir, done) {
 	var results = [];
@@ -47,9 +44,10 @@ var walk = function (dir, done) {
 	});
 }
 
-walk(__dirname, function (err, results) {
+var watchFilesAndCommit = function (err, results) {
 	results.forEach(function (file) {
 		fs.watch(file, function (event, filename) {
+			console.log(event);
 			repo.add('--all', function (err) {
 				repo.commit('File Updated', function (err) {
 					repo.commits(function (err, commits) {
@@ -59,16 +57,6 @@ walk(__dirname, function (err, results) {
 			});
 		});
 	});
-});
-//add comment
-//module.exports = currentFile;
-		// files.forEach(function (file) {
-		// 	console.log(file);
-		// 	fs.watchFile(file, function (err, data) {
-		// 		fs.readFile(file, {encoding: 'utf-8'}, function (err, data) {
-		// 			// currentFile = file;
-		// 			console.log(data);
-		// 			//addcomment
-		// 		});
-		// 	});
-		// });
+};
+// walk(__dirname, watchFilesAndCommit);
+//});
