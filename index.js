@@ -6,8 +6,6 @@ var git = require('gift');
 var dir = require("node-dir");
 var repo = git(__dirname);
 
-console.log(repo.cmd);
-
 dir.files(__dirname, function (err, files) {
 	if (err) throw err;
 	files.forEach(function (file) {
@@ -24,7 +22,6 @@ dir.files(__dirname, function (err, files) {
 		}
 	});
 });
-//add comment
 // var walk = function (dir, done) {
 // 	var results = [];
 // 	fs.readdir(dir, function (err, files) {
