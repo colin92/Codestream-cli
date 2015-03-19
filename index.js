@@ -10,11 +10,13 @@ dir.files(__dirname, function (err, files) {
 	if (err) throw err;
 	files.forEach(function (file) {
 		if (!file.match(/node_modules/) && !file.match(/.git/)) {
+			var i = 0;
 			fs.watch(file, function (event) {
 				repo.add(file, function (err) {
 					 repo.commit("File Updated", function (err) {
-						repo.remote_push('origin', 'master', function (err) {
-							if (err) console.log(err);
+						repo.remote_list(function (err, remotes) {
+							i++;
+							console.log(i, remotes);
 						});
 					 });
 				});
