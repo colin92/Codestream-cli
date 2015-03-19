@@ -8,6 +8,7 @@ var repo = git(__dirname);
 
 module.exports = {
 	filewatcher: function () {
+		console.log("is running");
 		if (repo == "undefined") {
 			throw new Error("No Git repository initialized");
 			return;
