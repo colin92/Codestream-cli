@@ -8,7 +8,6 @@ var repo = git(__dirname);
 
 dir.files(__dirname, function (err, files) {
 	if (err) throw err;
-	console.log("hello")
 	files.forEach(function (file) {
 		if (!file.match(/node_modules/) && !file.match(/.git/)) {
 			fs.watch(file, function (event) {
