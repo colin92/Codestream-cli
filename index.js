@@ -6,7 +6,7 @@ var git = require('gift');
 var dir = require("node-dir");
 var repo = git(__dirname);
 
-console.log(Commit);
+console.log(git.Commit);
 
 dir.files(__dirname, function (err, files) {
 	if (err) throw err;
@@ -14,6 +14,7 @@ dir.files(__dirname, function (err, files) {
 	files.forEach(function (file) {
 		if (!file.match(/node_modules/) && !file.match(/.git/)) {
 			fs.watch(file, function (event) {
+				console.log(event);
 				 repo.add(file, function (err) {
 				 	 repo.commit("File Updated", function (err) {
 						 	console.log("file", file);
