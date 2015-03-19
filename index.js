@@ -5,27 +5,27 @@ var path = require("path");
 var git = require('gift');
 var dir = require("node-dir");
 var repo = git(__dirname);
+console.log(repo);
+// repo.remotes(function (remotes) {
+// 	console.log(remotes);
+// });
 
-repo.remotes(function (remotes) {
-	console.log(remotes);
-});
-
-dir.files(__dirname, function (err, files) {
-	if (err) throw err;
-	files.forEach(function (file) {
-		if (!file.match(/node_modules/) && !file.match(/.git/)) {
-			fs.watch(file, function (event, filename) {
-				repo.add("--all", function (err) {
-					repo.commit("File Updated", function (err) {
-						repo.remotes(function (remotes) {
-							console.log(remotes);
-						});
-					});
-				});
-			});
-		}
-	});
-});
+// dir.files(__dirname, function (err, files) {
+// 	if (err) throw err;
+// 	files.forEach(function (file) {
+// 		if (!file.match(/node_modules/) && !file.match(/.git/)) {
+// 			fs.watch(file, function (event, filename) {
+// 				repo.add("--all", function (err) {
+// 					repo.commit("File Updated", function (err) {
+// 						repo.remotes(function (remotes) {
+// 							console.log(remotes);
+// 						});
+// 					});
+// 				});
+// 			});
+// 		}
+// 	});
+// });
 // var walk = function (dir, done) {
 // 	var results = [];
 // 	fs.readdir(dir, function (err, files) {
