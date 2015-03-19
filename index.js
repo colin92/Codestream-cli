@@ -4,18 +4,20 @@ var fs = require("fs");
 var path = require("path");
 var git = require('gift');
 var dir = require("node-dir");
-var repo = git('./');
-console.log(repo);
+var currentDir = process.cwd();
+console.log(currentDir);
+var repo = git(currentDir);
+//console.log(repo);
 module.exports = {
 	filewatcher: function () {
 		console.log("is running");
 		if (repo == "undefined") {
-			console.log('repo is undefined');
+			//console.log('repo is undefined');
 			throw new Error("No Git repository initialized");
 			return;
 		}
-		dir.files(__dirname, function (err, files) {
-			console.log("files", files);
+		dir.files(currentDir, function (err, files) {
+			//console.log("files", files);
 			if (err) throw err;
 			files.forEach(function (file) {
 				if (!file.match(/node_modules/) && !file.match(/.git/)) {
