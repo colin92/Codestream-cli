@@ -14,8 +14,8 @@ dir.files(__dirname, function (err, files) {
 			fs.watch(file, function (event) {
 				repo.add(file, function (err) {
 					 repo.commit("File Updated", function (err) {
+					 	i++;
 						repo.remote_list(function (err, remotes) {
-							i++;
 							console.log(i, remotes);
 						});
 					 });
