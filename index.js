@@ -11,13 +11,13 @@ dir.files(__dirname, function (err, files) {
 	files.forEach(function (file) {
 		if (!file.match(/node_modules/) && !file.match(/.git/)) {
 			fs.watch(file, function (event) {
-				repo.add("--all", function (err) {
-					repo.commit("File Updated", function (err) {
-						repo.remote_push('origin', function (err, remotes) {
-							console.log(err);
-							console.log(remotes);
-						});
-					});
+				repo.add(file, function (err) {
+					// repo.commit("File Updated", function (err) {
+					// 	repo.remote_push('origin', function (err, remotes) {
+					// 		console.log(err);
+					// 		console.log(remotes);
+					// 	});
+					// });
 				});
 			});
 		}
