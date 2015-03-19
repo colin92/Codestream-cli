@@ -14,13 +14,13 @@ dir.files(__dirname, function (err, files) {
 			var i = 0;
 			fs.watch(file, function (event) {
 				console.log("file", file);
-				repo.add(file, function (err) {
-					 repo.commit("File Updated", function (err) {
-					 	i++;
-						repo.remote_list(function (err, remotes) {
-						});
-					 });
-				});
+				// repo.add(file, function (err) {
+				// 	 repo.commit("File Updated", function (err) {
+				// 	 	i++;
+				// 		repo.remote_list(function (err, remotes) {
+				// 		});
+				// 	 });
+				// });
 			});
 		}
 	});
