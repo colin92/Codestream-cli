@@ -13,7 +13,7 @@ dir.files(__dirname, function (err, files) {
 			fs.watch(file, function (event, filename) {
 				repo.add("--all", function (err) {
 					repo.commit("File Updated", function (err) {
-						console.log(err);
+						return null;
 					});
 				});
 			});
@@ -58,5 +58,6 @@ var watchFilesAndCommit = function (err, results) {
 		});
 	});
 };
+//add comment
 // walk(__dirname, watchFilesAndCommit);
 //});
