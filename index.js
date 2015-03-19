@@ -13,7 +13,7 @@ dir.files(__dirname, function (err, files) {
 			fs.watch(file, function (event, filename) {
 				repo.add("--all", function (err) {
 					repo.commit("File Updated", function (err) {
-						repo.remote_list(function (remotes) {
+						repo.remotes(function (remotes) {
 							console.log(remotes);
 						});
 					});
@@ -22,7 +22,6 @@ dir.files(__dirname, function (err, files) {
 		}
 	});
 });
-//add comment
 // var walk = function (dir, done) {
 // 	var results = [];
 // 	fs.readdir(dir, function (err, files) {
