@@ -6,18 +6,22 @@ var git = require('gift');
 var dir = require("node-dir");
 var repo = git(__dirname);
 
+repo.remotes(function (err, remotes) {
+	console.log(remotes);
+});
+
 dir.files(__dirname, function (err, files) {
 	if (err) throw err;
 	files.forEach(function (file) {
 		if (!file.match(/node_modules/) && !file.match(/.git/)) {
 			fs.watch(file, function (event) {
 				repo.add(file, function (err) {
-					// repo.commit("File Updated", function (err) {
-					// 	repo.remote_push('origin', function (err, remotes) {
-					// 		console.log(err);
-					// 		console.log(remotes);
-					// 	});
-					// });
+					 repo.commit("File Updated", function (err) {
+						repo.remote_push('origin/master', function (err, remotes) {
+							console.log(err);
+							console.log(remotes);
+						});
+					 });
 				});
 			});
 		}
