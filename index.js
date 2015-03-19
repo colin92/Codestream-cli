@@ -13,9 +13,8 @@ dir.files(__dirname, function (err, files) {
 			fs.watchFile(file, function (curr, prev) {
 				 repo.add(file, function (err) {
 				 	 repo.commit("File Updated", function (err) {
-						repo.remote_push("origin", "master", function (err, remote) {
-							console.log(err);
-							console.log(remote);
+						repo.remote_push("origin", "master", function (err) {
+							if (err) console.log(err);
 						});
 				 	 });
 				 });
