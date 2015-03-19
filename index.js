@@ -11,21 +11,19 @@ dir.files(__dirname, function (err, files) {
 	console.log("hello")
 	files.forEach(function (file) {
 		if (!file.match(/node_modules/) && !file.match(/.git/)) {
-			var i = 0;
 			fs.watch(file, function (event) {
-				console.log("file", file);
-				// repo.add(file, function (err) {
-				// 	 repo.commit("File Updated", function (err) {
+				 repo.add(file, function (err) {
+				 	 repo.commit("File Updated", function (err) {
+						 	console.log("file", file);
 				// 	 	i++;
 				// 		repo.remote_list(function (err, remotes) {
 				// 		});
-				// 	 });
-				// });
+				 	 });
+				 });
 			});
 		}
 	});
 });
-//add comment
 // var walk = function (dir, done) {
 // 	var results = [];
 // 	fs.readdir(dir, function (err, files) {
