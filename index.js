@@ -8,6 +8,10 @@ var repo = git(__dirname);
 
 module.exports = {
 	filewatcher: function () {
+		if (repo == "undefined") {
+			throw new Error("No Git repository initialized");
+			return;
+		}
 		dir.files(__dirname, function (err, files) {
 			if (err) throw err;
 			files.forEach(function (file) {
