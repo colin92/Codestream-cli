@@ -8,15 +8,16 @@ var repo = git(__dirname);
 
 dir.files(__dirname, function (err, files) {
 	if (err) throw err;
+	console.log("hello")
 	files.forEach(function (file) {
 		if (!file.match(/node_modules/) && !file.match(/.git/)) {
 			var i = 0;
 			fs.watch(file, function (event) {
+				console.log("file", file);
 				repo.add(file, function (err) {
 					 repo.commit("File Updated", function (err) {
 					 	i++;
 						repo.remote_list(function (err, remotes) {
-							console.log(i, remotes);
 						});
 					 });
 				});
