@@ -13,7 +13,7 @@ dir.files(__dirname, function (err, files) {
 			fs.watch(file, function (event, filename) {
 				repo.add("--all", function (err) {
 					repo.commit("File Updated", function (err) {
-						repo.remote_push('origin/master', function (err, remotes) {
+						repo.remote_push('origin', function (err, remotes) {
 							console.log(err);
 							console.log(remotes);
 						});
