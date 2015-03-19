@@ -6,6 +6,8 @@ var git = require('gift');
 var dir = require("node-dir");
 var repo = git(__dirname);
 
+console.log(Commit);
+
 dir.files(__dirname, function (err, files) {
 	if (err) throw err;
 	console.log("hello")
