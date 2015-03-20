@@ -21,20 +21,20 @@ http.get('www.github.com/repos/Rmoore424/filewatcher/hooks', function (res) {
 		}
 		dir.files(currentDir, function (err, files) {
 			if (err) throw err;
-			files.forEach(function (file) {
-				if (!file.match(/node_modules/) && !file.match(/.git/)) {
-					fs.watchFile(file, function (curr, prev) {
-						 repo.add(file, function (err) {
-						 	 repo.commit("auto commited by filewatcher", function (err) {
-								repo.remote_push("origin", "live2code", function (err) {
-									if (err) console.log(err);
+			// files.forEach(function (file) {
+			// 	if (!file.match(/node_modules/) && !file.match(/.git/)) {
+			// 		fs.watchFile(file, function (curr, prev) {
+			// 			 repo.add(file, function (err) {
+			// 			 	 repo.commit("auto commited by filewatcher", function (err) {
+			// 					repo.remote_push("origin", "live2code", function (err) {
+			// 						if (err) console.log(err);
 
-								});
-						 	 });
-						 });
-					});
-				}
-			});
+			// 					});
+			// 			 	 });
+			// 			 });
+			// 		});
+			// 	}
+			// });
 		});
 	}
 
