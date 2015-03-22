@@ -7,13 +7,14 @@ var dir = require("node-dir");
 var watch = require('watch');
 var currentDir = process.cwd();
 var repo = git(currentDir);
+console.log(repo);
 
 var autoCommit = function (file) {
 	repo.add(file, function (err) {
 		if (err) console.log(err);
 		repo.commit("auto committed by Codestream", function (err) {
 				if (err) console.log(err);
-			repo.remote_push('origin', 'codestream', function (err) {
+			repo.remote_push('origin', 'master', function (err) {
 				if (err) console.log(err);
 			});
 		});
