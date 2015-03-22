@@ -4,23 +4,43 @@ var fs = require("fs");
 var path = require("path");
 var git = require('gift');
 var dir = require("node-dir");
-var http = require('http');
-
+var watch = require('watch');
 var currentDir = process.cwd();
 var repo = git(currentDir);
-http.get('www.github.com/repos/Rmoore424/filewatcher/hooks', function (res) {
-	console.log("got Response");
-}).on('error', function (e) {
-	console.log('Got Error' + e.message);
+
+watch.createMonitor(currentDir, {ignoreDotFiles: true, ignoreDirectoryPattern: /(node_modules)|(bower_components)/}, function (monitor) {
+	if (repo == "undefined") {
+		git.init(currentDir, function (err, repo) {
+			console.log("Initializing local repository " + repo);
+		});
+	}
+
+	monitor.on('created', function (file, stat) {
+		console.log(file);
+	});
+
+	monitor.on('changed', function (file, curr, prev) {
+		repo.add(file, function (err) {
+			console.log(err);
+		});
+	});
+
 });
+
+// var filewatcher = function () {
+
+// }
 //module.exports = {
-	var filewatcher = function () {
-		if (repo == "undefined") {
-			console.log("No Git repository initialized");
-			return;
-		}
-		dir.files(currentDir, function (err, files) {
-			if (err) throw err;
+	// var filewatcher = function () {
+	// 	if (repo == "undefined") {
+	// 		console.log("No Git repository initialized");
+	// 		git.init(currentDir, function (err, repo) {
+	// 			console.log(repo, " has been created");
+	// 		});
+	// 		return;
+	// 	}
+	// 	dir.files(currentDir, function (err, files) {
+	// 		if (err) throw err;
 			// files.forEach(function (file) {
 			// 	if (!file.match(/node_modules/) && !file.match(/.git/)) {
 			// 		fs.watchFile(file, function (curr, prev) {
@@ -35,8 +55,8 @@ http.get('www.github.com/repos/Rmoore424/filewatcher/hooks', function (res) {
 			// 		});
 			// 	}
 			// });
-		});
-	}
+	// 	});
+	// }
 
-	filewatcher();
+	// filewatcher();
 //}
