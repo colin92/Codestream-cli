@@ -37,7 +37,6 @@ watch.createMonitor(currentDir, {ignoreDotFiles: true, ignoreDirectoryPattern: /
 
 });
 
-//add comment
 //module.exports = {
 	// var filewatcher = function () {
 	// 	if (repo == "undefined") {
