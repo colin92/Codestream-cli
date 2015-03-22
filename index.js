@@ -36,34 +36,3 @@ watch.createMonitor(currentDir, {ignoreDotFiles: true, ignoreDirectoryPattern: /
 	});
 
 });
-
-//module.exports = {
-	// var filewatcher = function () {
-	// 	if (repo == "undefined") {
-	// 		console.log("No Git repository initialized");
-	// 		git.init(currentDir, function (err, repo) {
-	// 			console.log(repo, " has been created");
-	// 		});
-	// 		return;
-	// 	}
-	// 	dir.files(currentDir, function (err, files) {
-	// 		if (err) throw err;
-			// files.forEach(function (file) {
-			// 	if (!file.match(/node_modules/) && !file.match(/.git/)) {
-			// 		fs.watchFile(file, function (curr, prev) {
-			// 			 repo.add(file, function (err) {
-			// 			 	 repo.commit("auto commited by filewatcher", function (err) {
-			// 					repo.remote_push("origin", "live2code", function (err) {
-			// 						if (err) console.log(err);
-
-			// 					});
-			// 			 	 });
-			// 			 });
-			// 		});
-			// 	}
-			// });
-	// 	});
-	// }
-
-	// filewatcher();
-//}
