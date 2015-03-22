@@ -7,7 +7,6 @@ var dir = require("node-dir");
 var watch = require('watch');
 var currentDir = process.cwd();
 var repo = git(currentDir);
-console.log(repo);
 
 var autoCommit = function (file) {
 	repo.add(file, function (err) {
