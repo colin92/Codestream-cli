@@ -28,7 +28,7 @@ watch.createMonitor(currentDir, {ignoreDotFiles: true, ignoreDirectoryPattern: /
 	}
 
 	monitor.on('created', function (file, stat) {
-		console.log(file);
+		autoCommit(file);
 	});
 
 	monitor.on('changed', function (file, curr, prev) {
