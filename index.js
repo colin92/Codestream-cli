@@ -1,12 +1,20 @@
 #! /usr/bin/env node
 
-var fs = require("fs");
-var path = require("path");
 var git = require('gift');
-var dir = require("node-dir");
 var watch = require('watch');
+var http = require('http');
+var prompt = require('prompt');
+
 var currentDir = process.cwd();
 var repo = git(currentDir);
+
+prompt.start();
+
+prompt.get(['username', 'password'], function (err, result) {
+	console.log("Result ", result);
+	console.log('username ', + result.username);
+	console.log('password ' + result.password);
+});
 
 var autoCommit = function (file) {
 	repo.add(file, function (err) {
@@ -21,11 +29,6 @@ var autoCommit = function (file) {
 }
 
 watch.createMonitor(currentDir, {ignoreDotFiles: true, ignoreDirectoryPattern: /(node_modules)|(bower_components)/}, function (monitor) {
-	if (repo == "undefined") {
-		git.init(currentDir, function (err, repo) {
-			console.log("Initializing local repository " + repo);
-		});
-	}
 
 	monitor.on('created', function (file, stat) {
 		autoCommit(file);
@@ -34,5 +37,10 @@ watch.createMonitor(currentDir, {ignoreDotFiles: true, ignoreDirectoryPattern: /
 	monitor.on('changed', function (file, curr, prev) {
 		autoCommit(file);
 	});
+	if (repo == "undefined") {
+		git.init(currentDir, function (err, repo) {
+			console.log("Initializing local repository " + repo);
+		});
+	}
 
 });
