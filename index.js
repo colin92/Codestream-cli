@@ -28,19 +28,19 @@ var autoCommit = function (file) {
 	});
 }
 
-watch.createMonitor(currentDir, {ignoreDotFiles: true, ignoreDirectoryPattern: /(node_modules)|(bower_components)/}, function (monitor) {
+// watch.createMonitor(currentDir, {ignoreDotFiles: true, ignoreDirectoryPattern: /(node_modules)|(bower_components)/}, function (monitor) {
 
-	monitor.on('created', function (file, stat) {
-		autoCommit(file);
-	});
+// 	monitor.on('created', function (file, stat) {
+// 		autoCommit(file);
+// 	});
 
-	monitor.on('changed', function (file, curr, prev) {
-		autoCommit(file);
-	});
-	if (repo == "undefined") {
-		git.init(currentDir, function (err, repo) {
-			console.log("Initializing local repository " + repo);
-		});
-	}
+// 	monitor.on('changed', function (file, curr, prev) {
+// 		autoCommit(file);
+// 	});
+// 	if (repo == "undefined") {
+// 		git.init(currentDir, function (err, repo) {
+// 			console.log("Initializing local repository " + repo);
+// 		});
+// 	}
 
-});
+// });
