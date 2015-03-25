@@ -6,11 +6,15 @@
   "scripts": {
     "test": "echo 'Error: no test specified' && exit 1"
   },
+  "bin": {
+    "git-auto": "./index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/Rmoore424/filewatcher.git"
   },
   "dependencies": {
+    "app-root-path": "^1.0.0",
     "async": "^0.9.0",
     "bluebird": "^2.9.14",
     "gift": "^0.5.0",
@@ -19,4 +23,3 @@
     "request-promise": "^0.4.1",
     "watch": "^0.14.0"
   }
-}
