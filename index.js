@@ -49,7 +49,7 @@ prompt.get(promptSchema.user, function (err, result) {
 						var newOptions = {
 							uri: 'http://192.168.1.121:3000/repos/start',
 							body: {
-								repo: result.repositoryName
+								repository: result.repositoryName
 							},
 							json: true,
 							headers: {
@@ -58,8 +58,8 @@ prompt.get(promptSchema.user, function (err, result) {
 						}
 						request.post(newOptions)
 							.then(function (response) {
-								console.log(response);
-							}).catch(console.error);
+								console.log("Your lecture is available at http://codestream.co/" + response.repoId);
+							}).then(gitAuto(repo, currentDir)).catch(console.error);
 					}
 				});
 
@@ -72,8 +72,9 @@ prompt.get(promptSchema.user, function (err, result) {
 								var createRepoOptions = {
 									uri: 'http://192.168.1.121:3000/repos/create',
 									body: {
-										repo: data.name,
-										githubUrl: data.clone_url //this might have to change
+										repository: data.name,
+										githubUrl: data.clone_url,
+										username: githubUsername //this might have to change
 									},
 									json: true,
 									headers: {
@@ -101,7 +102,10 @@ prompt.get(promptSchema.user, function (err, result) {
 								}).then(gitAuto(repo, currentDir)).catch(console.error);
 							});
 					});
-				}
+				} else {
+					console.log("Unknown Repository, exiting CLIve".red);
+					process.kill();
+					}
 			});
 		}).catch(console.error);
 });
