@@ -17,7 +17,7 @@ var autoCommit = function (file, repo) {
 var fileWatcher = function (repo, directory) {
 			//watch for modified or create files and auto add, commit, push to the remote
 			watch.createMonitor(directory, {ignoreDotFiles: true, ignoreDirectoryPattern: /(node_modules)|(bower_components)/}, function (monitor) {
-				console.log(directory ' files are now being watched');
+				console.log(directory, ' files are now being watched');
 				monitor.on('created', function (file, stat) {
 					if (!stat.isDirectory()) {
 						autoCommit(file, repo);
