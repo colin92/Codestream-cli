@@ -6,7 +6,7 @@ var http = require('http');
 var request = require('request-promise');
 var prompt = require('prompt');
 var appRoot = require('app-root-path');
-var promptSchema = require('prompt-schema');
+var promptSchema = require('./prompt-schema');
 var gitAuto = require('./filewatcher');
 
 var currentDir = appRoot.path;
