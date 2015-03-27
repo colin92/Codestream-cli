@@ -27,7 +27,7 @@ module.exports = {
 		}
 	},
 
-	newRepo = {
+	newRepo: {
 		properties: {
 			newRepoName: {
 				description: "Enter the name of your new remote repository".cyan
