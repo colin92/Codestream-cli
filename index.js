@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 var git = require('gift');
 var GitHubApi = require('github');
 var http = require('http');
@@ -10,6 +9,8 @@ var promptSchema = require('./prompt-schema');
 var gitAuto = require('./filewatcher');
 var prompts = require('./prompts');
 var gitAuth = require('./git-auth');
+var repoMatch = require('./repo-requests');
+var gitCommands = require('./git-create-repo');
 var fs = require('fs');
 var Q = require('q');
 var app = require('express')();
@@ -18,21 +19,26 @@ app.listen(4567);
 app.post('/login', function (req, res, next) {
 	res.send([{'name': 'Repo1', "githubUrl": "123happytownlane"}, {'name': 'Repo2', 'githubUrl': '12323Alaska'}]);
 });
+
+app.post('/repos/start', function (req, res, next) {
+	res.send({hello: "hello"});
+});
+
 var currentDir = appRoot.path;
 var repo = git(currentDir);
 var github = new GitHubApi({
 	version: "3.0.0"
 });
 
-var githubUsername, repositoryList, sessionCookie;
+var githubUsername, githubPassword, repositoryList, newRepoUrl; 
+var sessionCookie = "hello";
 
 prompt.start();
 
 prompts.userInfo()
 	.then(function (results) {
 		githubUsername = results.githubUsername;
-
-		gitAuth(results.githubUsername, results.githubPassword);
+		githubPassword = results.githubPassword
 		
 		return options = {
 			uri: 'http://localhost:4567/login',
@@ -45,79 +51,44 @@ prompts.userInfo()
 		}
 	})
 	.then(function (options) {
-		return request.post(options)
-			.then(function (response) {
-				repositoryList = response.body;
-				sessionCookie = response.headers['set-cookie'][0];
-				console.log(repositoryList);
-				return repositoryList;
-		})
+		var deferred = Q.defer();
+
+		request.post(options, function (err, response, body) {
+			deferred.resolve(body);
+		});
+		return deferred.promise;
 	})
-	.then(function (body) {
-		return prompts.chooseRepo()
+	.then(function (repos) {
+		console.log(repos);
+		repositoryList = repos;
+		return prompts.chooseRepo();
 	})
 	.then(function (results) {
-		repositoryList.forEach(function (repository) {
-			if (repository.name === results.repositoryName) {
-				return 
-			}
-		})
+		return repoMatch(repositoryList, results);
 	})
-	// .then(function (response) {
-	// 	console.log(response);
-	// })
+	.then(function (response) {
+		//To create a new repository
+		if (response.newRepoName) {
+			return gitCommands.createRepo(response, githubUsername, githubPassword);
+		}
+		//start watching files if a repo was matched
+		else {
+			console.log("Your lecture is starting at ")
+			gitAuto(repo, currentDir);
+		}
+	})
+	.then(function (repoInfo) {
+		newRepoUrl = repoInfo.ssh_url;
+		return gitCommands.addHook(repoInfo, githubUsername, githubPassword);
+	})
+	.then(function (hookInfo) {
+		return gitCommands.addRemoteToLocal(newRepoUrl, repo);
+	})
+	.then(function () {
+		console.log('hello');
+	})
+	.catch(console.error);
 
-// prompt.get(promptSchema.user, function (err, result) {
-// 	var githubUsername = result.githubUsername;
-// 	var sessionCookie;
-// 	//basic authentication with github
-// 	github.authenticate({
-// 		type: "basic",
-// 		username: githubUsername,
-// 		password: result.githubPassword
-// 	});
-
-// 	var options = {
-// 		uri: 'http://192.168.1.121:3000/login',
-// 		body: {
-// 			username: githubUsername,
-// 			password: result.codestreamPassword
-// 		},
-// 		json: true,
-// 		resolveWithFullResponse: true
-// 	};
-// 	//login to codestream to get a list of repositories from the database
-// 	request.post(options)
-// 		.then(function (response) {
-// 			var repositoryList = response.body;
-// 			var sessionCookie = response.headers['set-cookie'][0];
-// 			console.log(repositoryList);
-// 			prompt.get(promptSchema.repo, function (err, result) {
-// 				repositoryList.forEach(function (repository) {
-// 					if (repository.name === result.repositoryName) {
-// 						var newOptions = {
-// 							uri: 'http://192.168.1.121:3000/repos/start',
-// 							body: {
-// 								repository: result.repositoryName
-// 							},
-// 							json: true,
-// 							headers: {
-// 								"Cookie": sessionCookie
-// 							}
-// 						}
-// 						request.post(newOptions)
-// 							.then(function (response) {
-// 								console.log("Your lecture is available at http://codestream.co/" + response.repoId);
-// 							}).then(gitAuto(repo, currentDir)).catch(console.error);
-// 					}
-// 				});
-
-// 				if (result.repositoryName === 'new') {
-// 					prompt.get(promptSchema.newRepo, function (err, result) {
-// 						//create a new Github repository
-// 						github.repos.create({
-// 							name: result.newRepoName
-// 						}, function (err, data) {
 // 									//add a webhook to the new repository for codestream
 // 									github.repos.createHook({
 // 										user: githubUsername,
