@@ -4,7 +4,8 @@ import os
 import importlib.machinery
 
 
-import sublime, sublime_plugin, http, json
+import sublime, sublime_plugin, json
+from http import client
 
 
 
