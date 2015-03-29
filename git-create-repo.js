@@ -47,7 +47,7 @@ var addHook = function (repoInfo, username, password) {
 
 var addRemoteToLocal = function (url, repo) {
 	var deferred = Q.defer();
-	repo.remote_add('origin', url, function (err) {
+	repo.remote_add('codestream', url, function (err) {
 		if (err) console.log(err)
 			deferred.resolve();
 	})

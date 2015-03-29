@@ -36,4 +36,28 @@ var repoMatch = function (repositoryArr, data) {
 	}
 
 }
-module.exports = repoMatch;
+
+var sendRepo = function (repoInfo, username, cookie) {
+	var deferred = Q.defer();
+	var options = {
+		uri: 'http://localhost:3000/repos/create'
+		body: {
+			repository: repoInfo.name,
+			githubUrl: repoInfo.clone_url,
+			username: username
+		},
+		json: true,
+		headers: {
+			"Cookie": cookie
+		}
+	}
+	request.post(options, function (err, response, body) {
+		deferred.resolve(body);
+	})
+	return deferred.promise;
+}
+
+module.exports = {
+	repoMatch: repoMatch,
+	sendRepo: sendRepo
+}

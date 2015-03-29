@@ -2,19 +2,19 @@ var watch = require('watch'); // need to edit watch main.js(handle double event)
 
 var autoCommit = function (file, repo) {
 	repo.add(file, function (err) {
-		if (err) console.log(err);
+		if (err) console.log("Error adding file to local repository", err);
 		repo.commit("auto committed by Codestream", function (err) {
-			if (err) console.log(err);
-			console.log("New local commit created");
-			repo.remote_push('origin', 'master', function (err) {
-				if (err) console.log(err);
-				console.log("Commit pushed to remote repository");
+			if (err) console.log("Error commiting files", err);
+			else console.log("New local commit created");
+			repo.remote_push('codestream', 'master', function (err) {
+				if (err) console.log("Error pushing to remote", err);
+				else console.log("Commit pushed to remote repository");
 			});
 		});
 	});
 }
 
-var fileWatcher = function (repo, directory) {
+var fileWatcher = function (directory, repo) {
 			//watch for modified or create files and auto add, commit, push to the remote
 			watch.createMonitor(directory, {ignoreDotFiles: true, ignoreDirectoryPattern: /(node_modules)|(bower_components)/}, function (monitor) {
 				console.log(directory, ' files are now being watched');
@@ -36,4 +36,7 @@ var fileWatcher = function (repo, directory) {
 			});			
 		}
 
-module.exports = fileWatcher;
+module.exports = {
+	fileWatcher: fileWatcher,
+	autoCommit: autoCommit
+}
