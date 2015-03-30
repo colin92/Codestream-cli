@@ -2,21 +2,21 @@ var request = require('request-promise');
 var prompts = require('./prompts');
 var Q = require('q');
 
-var repoMatch = function (repositoryArr, data) {
+var repoMatch = function (repositoryArr, data, cookie) {
 	var options;
 	var match = false;
 	repositoryArr.forEach(function (repository) {
 		if (repository.name === data.repositoryName) {
 			match = true;
 			options = {
-				uri: 'http://localhost:4567/repos/start',
+				uri: 'http://localhost:1337/api/cli/repos/start',
 				body: {
 					repository: data.repositoryName
 				},
 				json: true,
-				// headers: {
-				// 	"Cookie": sessionCookie
-				// }
+				headers: {
+					"Cookie": cookie
+				}
 			}
 		}
 	});
@@ -40,10 +40,10 @@ var repoMatch = function (repositoryArr, data) {
 var sendRepo = function (repoInfo, username, cookie) {
 	var deferred = Q.defer();
 	var options = {
-		uri: 'http://localhost:3000/repos/create'
+		uri: 'http://localhost:1337/api/cli/repos/create',
 		body: {
 			repository: repoInfo.name,
-			githubUrl: repoInfo.clone_url,
+			githubUrl: repoInfo.ssh_url,
 			username: username
 		},
 		json: true,
