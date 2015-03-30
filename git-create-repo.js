@@ -36,8 +36,9 @@ var addHook = function (repoInfo, username, password) {
 		repo: repoInfo.name,
 		name: 'web',
 		config: {
-			url: 'http://593d2949.ngrok.com/api/cli/payload',
-			content_type: 'application/json'
+			url: 'http://593d2949.ngrok.com/api/cli/repos/' + repoInfo.name + '/push',
+			content_type: 'application/json',
+			secret: 'codestream is awesome'
 		}
 	}, function (err, hookInfo) {
 		deferred.resolve(hookInfo);
