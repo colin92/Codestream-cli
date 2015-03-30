@@ -36,7 +36,7 @@ var addHook = function (repoInfo, username, password) {
 		repo: repoInfo.name,
 		name: 'web',
 		config: {
-			url: 'http://593d2949.ngrok.com/payload',
+			url: 'http://593d2949.ngrok.com',
 			content_type: 'application/json'
 		}
 	}, function (err, hookInfo) {
