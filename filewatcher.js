@@ -13,7 +13,7 @@ var autoCommit = function (file, repo) {
 		});
 	});
 }
-
+//add comment
 var fileWatcher = function (directory, repo) {
 			//watch for modified or create files and auto add, commit, push to the remote
 			watch.createMonitor(directory, {ignoreDotFiles: true, ignoreDirectoryPattern: /(node_modules)|(bower_components)/}, function (monitor) {
