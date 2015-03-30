@@ -36,7 +36,7 @@ var addHook = function (repoInfo, username, password) {
 		repo: repoInfo.name,
 		name: 'web',
 		config: {
-			url: 'http:/localhost:1337/api/clipayload',
+			url: 'http:/localhost:1337/api/cli/payload',
 			content_type: 'application/json'
 		}
 	}, function (err, hookInfo) {
