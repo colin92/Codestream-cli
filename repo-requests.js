@@ -2,6 +2,23 @@ var request = require('request-promise');
 var prompts = require('./prompts');
 var Q = require('q');
 
+var loginUser = function (username, password) {
+	var deffered = Q.defer();
+	var options = {
+		uri: 'http://localhost:1337/api/cli/login',
+		body: {
+			username: username,
+			password: password
+		},
+		json: true,
+		resolveWithFullResponse: true
+	}
+	request.post(options, function (err, response, body) {
+		deferred.resolve(response);
+	});
+	return deferred.promise;
+}
+
 var repoMatch = function (repositoryArr, data, cookie) {
 	var options;
 	var match = false;
