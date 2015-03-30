@@ -81,7 +81,7 @@ prompts.userInfo()
 		}
 		//start watching files if a repo was matched
 		else {
-			console.log("Your lecture is starting at ")
+			console.log("Your lecture is starting at " + response.repoId);
 			gitAuto.fileWatcher(currentDir, repo);
 		}
 	}).done();
