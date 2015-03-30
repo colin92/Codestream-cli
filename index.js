@@ -77,11 +77,17 @@ prompts.userInfo()
 					console.log("Your Lecture can be found at http://codestream.co/" + response.repoId);
 					gitAuto.fileWatcher(currentDir, repo);
 
-				});
+				})
+				.catch(function (err) {
+					console.log(err);
+				})
+				.done();
 		}
 		//start watching files if a repo was matched
 		else {
 			console.log("Your lecture is starting at " + response.repoId);
 			gitAuto.fileWatcher(currentDir, repo);
 		}
+	}).catch(function (err) {
+		console.log(err);
 	}).done();
