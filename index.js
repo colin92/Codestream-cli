@@ -16,7 +16,9 @@ var Q = require('q');
 
 var currentDir = appRoot.path;
 var repo = git(currentDir);
-console.log(repo);
+repo.git.list_remotes(function (err, list) {
+	console.log(list);
+})
 var github = new GitHubApi({
 	version: "3.0.0"
 });
