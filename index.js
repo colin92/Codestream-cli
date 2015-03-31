@@ -52,8 +52,11 @@ prompts.userInfo()
 					return gitCommands.addRemoteToLocal(response.url, repo, response.repoId);
 				})
 				.then(function (repoId) {
+					repo.sync('codestream', 'master', function (err) {
+						if (err) console.log(err);
 						console.log("Your lecture can be found at http://codestream.co/" + repoId);
 						gitAuto.fileWatcher(currentDir, repo);
+					})
 				})
 				.catch(function (err) {
 					console.error(err);
