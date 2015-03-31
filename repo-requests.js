@@ -3,7 +3,7 @@ var prompts = require('./prompts');
 var Q = require('q');
 
 var loginUser = function (username, password) {
-	var deffered = Q.defer();
+	var deferred = Q.defer();
 	var options = {
 		uri: 'http://localhost:1337/api/cli/login',
 		body: {
@@ -15,6 +15,40 @@ var loginUser = function (username, password) {
 	}
 	request.post(options, function (err, response, body) {
 		deferred.resolve(response);
+	});
+	return deferred.promise;
+}
+
+var getRepos = function (userId, cookie) {
+	var deferred = Q.defer();
+	var options = {
+		uri: 'http://localhost:1337/api/cli/repos/' +userId,
+		headers: {
+			'Cookie': cookie
+		}
+	}
+	request.get(options, function (err, response, body) {
+		deferred.resolve(JSON.parse(body));
+	})
+	return deferred.promise;
+}
+
+var createRepo = function (repoName, username, password, cookie) {
+	var deferred = Q.defer();
+	var options = {
+		uri: 'http://localhost:1337/api/cli/repos/create',
+		body: {
+			repository: repoName,
+			username: username,
+			password: password
+		},
+		json: true,
+		headers: {
+			'Cookie': cookie
+		}
+	}
+	request.post(options, function (err, response, body) {
+		deferred.resolve(body);
 	});
 	return deferred.promise;
 }
@@ -76,5 +110,8 @@ var sendRepo = function (repoInfo, username, cookie) {
 
 module.exports = {
 	repoMatch: repoMatch,
-	sendRepo: sendRepo
+	sendRepo: sendRepo,
+	loginUser: loginUser,
+	getRepos: getRepos,
+	createRepo: createRepo
 }

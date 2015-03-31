@@ -6,16 +6,30 @@ var userInfo = function () {
 	return Q.nfcall(prompt.get, promptSchema.user)
 }
 
-var chooseRepo = function () {
-	return Q.nfcall(prompt.get, promptSchema.repo)
+var chooseRepo = function (repoArray) {
+	var deferred = Q.defer();
+		prompt.get(promptSchema.repo, function (err, result) {
+			if (err) console.error(err)
+			if (result.repositoryResponse === 'new') {
+				deferred.resolve('new');
+			}
+			else if (repoArray[result.repositoryResponse-1]) {
+				deferred.resolve(repoArray[result.repositoryResponse-1])
+			}
+			else { 
+				console.log("Invalid Response")
+				process.kill();
+			}
+		})
+		return deferred.promise;
 }
 
-var createRepo = function () {
+var newRepo = function () {
 	return Q.nfcall(prompt.get, promptSchema.newRepo)
 }
 
 module.exports = {
 	userInfo: userInfo,
 	chooseRepo: chooseRepo,
-	createRepo: createRepo
+	newRepo: newRepo
 }

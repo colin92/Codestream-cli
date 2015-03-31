@@ -21,8 +21,8 @@ module.exports = {
 	},
 	repo: {
 		properties: {
-			repositoryName: {
-				description: "If your repository is included in the list above, type in the name of that repository, else type 'new'\n\n".green
+			repositoryResponse: {
+				description: "If your repository is included in the list above, type in the number of that repository, else type 'new'\n".green
 			}
 		}
 	},

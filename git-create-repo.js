@@ -5,7 +5,7 @@ var github = new GitHubApi({
 	version: "3.0.0"
 });
 
-var createRepo = function (data, username, password) {
+var createRepo = function (name, username, password) {
 	var deferred = Q.defer();
 
 	github.authenticate({
@@ -15,8 +15,9 @@ var createRepo = function (data, username, password) {
 	})
 
 	github.repos.create({
-		name: data.newRepoName
+		name: name
 	}, function (err, repoInfo) {
+		if (err) console.log(err);
 		deferred.resolve(repoInfo);
 	})
 	return deferred.promise;
@@ -46,11 +47,11 @@ var addHook = function (repoInfo, username, password) {
 	return deferred.promise;
 }
 
-var addRemoteToLocal = function (url, repo, repoId) {
+var addRemoteToLocal = function (url, repo, repoName) {
 	var deferred = Q.defer();
 	repo.remote_add('codestream', url, function (err) {
 		if (err) console.log(err)
-			deferred.resolve(repoId);
+			deferred.resolve(repoName);
 	})
 	return deferred.promise;
 }
