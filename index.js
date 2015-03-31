@@ -64,7 +64,15 @@ prompts.userInfo()
 				.done();
 		}
 		else {
-
+			repoRequests.getRepo(response.newRepoName)
+				.then(function (repoId) {
+					console.log("Your lecture can be found at http://codestream.co/" + repoId);
+					gitAuto.fileWatcher(currentDir, repo);
+				})
+				.catch(function (err) {
+					console.error(err);
+				})
+				.done();
 		} 	
 	}).catch(function (err) {
 		console.error(err);
