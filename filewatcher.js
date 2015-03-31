@@ -6,7 +6,7 @@ var autoCommit = function (file, repo) {
 		repo.commit("auto committed by Codestream", function (err) {
 			if (err) console.log("Error commiting files", err);
 			else console.log("New local commit created");
-			repo.remote_push('origin', 'master', function (err) {
+			repo.remote_push('codestream', 'master', function (err) {
 				if (err) console.log("Error pushing to remote", err);
 				else console.log("Commit pushed to remote repository");
 			});
