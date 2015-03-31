@@ -46,11 +46,11 @@ var addHook = function (repoInfo, username, password) {
 	return deferred.promise;
 }
 
-var addRemoteToLocal = function (url, repo) {
+var addRemoteToLocal = function (url, repo, repoId) {
 	var deferred = Q.defer();
-	repo.remote_add('codestream', url, function (err) {
+	repo.remote_add('origin', url, function (err) {
 		if (err) console.log(err)
-			deferred.resolve();
+			deferred.resolve(repoId);
 	})
 	return deferred.promise;
 }
