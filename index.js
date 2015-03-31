@@ -16,9 +16,6 @@ var Q = require('q');
 
 var currentDir = appRoot.path;
 var repo = git(currentDir);
-repo.git.list_remotes(function (err, list) {
-	console.log(list);
-})
 var github = new GitHubApi({
 	version: "3.0.0"
 });
@@ -42,7 +39,7 @@ prompts.userInfo()
 	.then(function (repos) {
 		var repoString = repos.map(function (val, idx) {
       			return (idx+1) + '. ' + val;
-    		}).join(',');
+    		}).join(', ');
 		console.log("Available Repos: ", repoString);
 		return prompts.chooseRepo(repos);
 	})
@@ -57,8 +54,10 @@ prompts.userInfo()
 					return gitCommands.addRemoteToLocal(response.url, repo, response.repoId);
 				})
 				.then(function (repoId) {
-					console.log("Your lecture can be found at http://codestream.co/" + repoId);
-					gitAuto.fileWatcher(currentDir, repo);
+					repo.remote_push('codestream', 'master', function (err) {
+						console.log("Your lecture can be found at http://codestream.co/" + repoId);
+						gitAuto.fileWatcher(currentDir, repo);
+					});
 				})
 				.catch(function (err) {
 					console.error(err);
