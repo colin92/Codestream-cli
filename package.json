@@ -7,11 +7,11 @@
     "test": "echo 'Error: no test specified' && exit 1"
   },
   "bin": {
-    "CLIve": "./index.js"
+    "CLIve": "./bin/CLIve"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/Rmoore424/filewatcher.git"
+    "url": "git://github.com/Rmoore424/Codestream-cli.git"
   },
   "dependencies": {
     "app-root-path": "^1.0.0",
