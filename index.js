@@ -3,12 +3,12 @@ var GitHubApi = require('github');
 var request = require('request-promise');
 var prompt = require('prompt');
 var appRoot = require('app-root-path');
-var promptSchema = require('./prompt-schema');
-var gitAuto = require('./filewatcher');
-var prompts = require('./prompts');
-var requests = require('./requests');
-var gitCommands = require('./git-create-repo');
-var Q = require('q');
+var promptSchema = require('./lib/prompt-schema');
+var gitAuto = require('./lib/filewatcher');
+var prompts = require('./lib/prompts');
+var requests = require('./lib/requests');
+var gitCommands = require('./lib/git-create-repo');
+var nodeExec = require('./lib/execs');
 var exec = require('child_process').exec;
 
 var currentDir = appRoot.path;
@@ -17,11 +17,16 @@ var github = new GitHubApi({
 	version: "3.0.0"
 });
 
-var githubUsername, githubPassword, sessionCookie; 
+console.log(currentDir);
 
+var githubUsername, githubPassword, sessionCookie;
 prompt.start();
 
-prompts.userInfo()
+//Copies Codestream Sublime Text Plugin
+nodeExec.installSublimePlugin()
+.then(function () {
+	return prompts.userInfo()
+	})
 	.then(function (results) {
 		githubUsername = results.githubUsername;
 		githubPassword = results.githubPassword
@@ -77,4 +82,4 @@ prompts.userInfo()
 	}).catch(function (err) {
 		console.error("Exiting CLIve:", err);
 	})
-	.done();
+.done();
