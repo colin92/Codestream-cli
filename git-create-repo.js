@@ -17,7 +17,7 @@ var createRepo = function (name, username, password) {
 	github.repos.create({
 		name: name
 	}, function (err, repoInfo) {
-		if (err) console.log(err);
+		if (err) console.log("Error creating repository:", err);
 		deferred.resolve(repoInfo);
 	})
 	return deferred.promise;
@@ -42,6 +42,7 @@ var addHook = function (repoInfo, username, password) {
 			secret: 'codestream is awesome'
 		}
 	}, function (err, hookInfo) {
+		if (err) console.log("Error creating webhook:", err);
 		deferred.resolve(hookInfo);
 	})
 	return deferred.promise;
@@ -50,7 +51,7 @@ var addHook = function (repoInfo, username, password) {
 var addRemoteToLocal = function (url, repo, repoName) {
 	var deferred = Q.defer();
 	repo.remote_add('codestream', url, function (err) {
-		if (err) console.log(err)
+		if (err) console.log("Error setting remote, Exiting CLIve:", err)
 			deferred.resolve(repoName);
 	})
 	return deferred.promise;

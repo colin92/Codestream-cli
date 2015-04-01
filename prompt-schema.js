@@ -22,7 +22,7 @@ module.exports = {
 	repo: {
 		properties: {
 			repositoryResponse: {
-				description: "If your repository is included in the list above, type in the number of that repository, else type 'new'\n".green
+				description: "If your repository is listed, Enter the number of that repository, or type 'new' to create one\n".green
 			}
 		}
 	},
