@@ -57,7 +57,7 @@ prompts.userInfo()
 							gitAuto.fileWatcher(currentDir, repo); 
 						}
 					})
-									})
+				})
 				.catch(function (err) {
 					console.error("Exiting CLIve:", err);
 				})
