@@ -12,7 +12,7 @@ var nodeExec = require('./lib/execs');
 var exec = require('child_process').exec;
 var chalk = require('chalk');
 
-var currentDir = appRoot.path;
+var currentDir = process.cwd();
 var repo = git(currentDir);
 var github = new GitHubApi({
 	version: "3.0.0"
