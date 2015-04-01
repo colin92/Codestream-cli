@@ -65,7 +65,7 @@ nodeExec.installSublimePlugin()
 					})
 				})
 				.catch(function (err) {
-					console.error("Exiting CLIve:", err);
+					chalk.red(console.error("Exiting CLIve:", err));
 				})
 				.done();
 		}
@@ -76,11 +76,11 @@ nodeExec.installSublimePlugin()
 					gitAuto.fileWatcher(currentDir, repo);
 				})
 				.catch(function (err) {
-					console.error("Exiting CLIve:", err);
+					chalk.red(console.error("Exiting CLIve:", err));
 				})
 				.done();
 		} 	
 	}).catch(function (err) {
-		console.error("Exiting CLIve:", err);
+		chalk.red(console.error("Exiting CLIve:", err));
 	})
 .done();
