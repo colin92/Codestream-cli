@@ -18,7 +18,7 @@ var github = new GitHubApi({
 	version: "3.0.0"
 });
 
-console.log(currentDir);
+console.log(chalk.red(currentDir));
 
 var githubUsername, githubPassword, sessionCookie;
 prompt.start();
@@ -41,7 +41,7 @@ nodeExec.installSublimePlugin()
 		var repoString = repos.map(function (val, idx) {
       			return (idx+1) + '. ' + val;
     		}).join(', ');
-		console.log("Available Repos: ", repoString);
+		console.log(chalk.yellow("Available Repos: ", repoString));
 		return prompts.chooseRepo(repos);
 	})
 	.then(function (response) {
@@ -65,7 +65,7 @@ nodeExec.installSublimePlugin()
 					})
 				})
 				.catch(function (err) {
-					chalk.red(console.error("Exiting CLIve:", err));
+					console.log(chalk.red("Exiting CLIve:", err));
 				})
 				.done();
 		}
@@ -76,11 +76,11 @@ nodeExec.installSublimePlugin()
 					gitAuto.fileWatcher(currentDir, repo);
 				})
 				.catch(function (err) {
-					chalk.red(console.error("Exiting CLIve:", err));
+					console.log(chalk.red("Exiting CLIve:", err));
 				})
 				.done();
 		} 	
 	}).catch(function (err) {
-		chalk.red(console.error("Exiting CLIve:", err));
-	})
+		console.log(chalk.red("Exiting CLIve:", err));
+})
 .done();
