@@ -10,6 +10,7 @@ var requests = require('./lib/requests');
 var gitCommands = require('./lib/git-create-repo');
 var nodeExec = require('./lib/execs');
 var exec = require('child_process').exec;
+var chalk = require('chalk');
 
 var currentDir = appRoot.path;
 var repo = git(currentDir);
@@ -58,7 +59,7 @@ nodeExec.installSublimePlugin()
 					exec('git pull codestream master', function (error, stdout, stderr) {
 						if (error) console.error(error);
 						else {
-							console.log("Your lecture can be found at http://codestream.co/" + repoId);
+							console.log(chalk.green("Your lecture can be found at http://codestream.co/" + repoId));
 							gitAuto.fileWatcher(currentDir, repo); 
 						}
 					})
@@ -71,7 +72,7 @@ nodeExec.installSublimePlugin()
 		else {
 			requests.getRepo(response, sessionCookie)
 				.then(function (repoId) {
-					console.log("Your lecture can be found at http://codestream.co/" + repoId);
+					console.log(chalk.green("Your lecture can be found at http://codestream.co/" + repoId));
 					gitAuto.fileWatcher(currentDir, repo);
 				})
 				.catch(function (err) {
