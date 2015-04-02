@@ -28,7 +28,7 @@ class MyEventListener(sublime_plugin.EventListener):
 	def on_modified_async(self, view):
 		if settings.get(on_modified_field):
 			print("Modified file - sending")  
-			connection = http.client.HTTPConnection('localhost:1337')
+			connection = http.client.HTTPConnection('http://codestream.co')
 			fulltext = view.substr(sublime.Region(0, view.size()))
 			pos = view.rowcol(view.sel()[0].begin())
 	
