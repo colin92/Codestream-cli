@@ -14,7 +14,6 @@
     "url": "git://github.com/Rmoore424/Codestream-cli.git"
   },
   "dependencies": {
-    "app-root-path": "^1.0.0",
     "bluebird": "^2.9.14",
     "chalk": "^1.0.0",
     "gift": "^0.5.0",

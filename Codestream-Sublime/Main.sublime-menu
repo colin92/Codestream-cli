@@ -6,6 +6,10 @@
 			{
 				"caption": "run",
 				"command": "codestream"
+			},
+			{
+				"caption": "dev mode",
+				"command": "codestream_local"
 			}
 		]
 	}
