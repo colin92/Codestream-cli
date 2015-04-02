@@ -2,7 +2,6 @@ var git = require('gift');
 var GitHubApi = require('github');
 var request = require('request-promise');
 var prompt = require('prompt');
-var appRoot = require('app-root-path');
 var promptSchema = require('./lib/prompt-schema');
 var gitAuto = require('./lib/filewatcher');
 var prompts = require('./lib/prompts');
