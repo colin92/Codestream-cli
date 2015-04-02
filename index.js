@@ -17,8 +17,6 @@ var github = new GitHubApi({
 	version: "3.0.0"
 });
 
-console.log(chalk.red(currentDir));
-
 var githubUsername, githubPassword, sessionCookie;
 prompt.start();
 
