@@ -52,7 +52,6 @@ nodeExec.installSublimePlugin()
 					return requests.createRepo(response.newRepoName, githubUsername, githubPassword, sessionCookie);
 				})
 				.then(function (response) {
-					console.log(response);
 					return gitCommands.addRemoteToLocal(response.url, repo, response.repoId);
 				})
 				.then(function (repoId) {
