@@ -62,14 +62,11 @@ nodeExec.installSublimePlugin()
 
 				})
 				.then(function (repoId) {
-					console.log('promise', repoId);
-					exec('git pull codestream master', function (error, stdout, stderr) {
 						if (error) console.error(error);
 						else {
 							console.log(chalk.green("Your lecture can be found at http://codestream.co/classroom/" + repoId));
 							gitAuto.fileWatcher(currentDir, repo); 
 						}
-					})
 				})
 				.catch(function (err) {
 					console.log(chalk.red("Exiting CLIve:", err));
