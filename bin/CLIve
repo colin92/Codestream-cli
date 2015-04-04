@@ -46,7 +46,6 @@ nodeExec.installSublimePlugin()
 	})
 	.then(function (response) {
 		if (response === 'new') {
-			//create a new repository
 			prompts.newRepo()
 				.then(function (response) {
 					var url = 'git@github.com:' +githubUsername+ '/' +response.newRepoName+ '.git';
@@ -75,7 +74,7 @@ nodeExec.installSublimePlugin()
 		else {
 			requests.getRepo(response, sessionCookie)
 				.then(function (repoId) {
-					console.log(chalk.green("Your lecture can be found at http://codestream.co/" + repoId));
+					console.log(chalk.green("Your lecture can be found at http://codestream.co/classroom/" + repoId));
 					gitAuto.fileWatcher(currentDir, repo);
 				})
 				.catch(function (err) {
