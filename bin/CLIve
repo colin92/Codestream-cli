@@ -10,9 +10,13 @@ var prompts = require('../lib/prompts');
 var requests = require('../lib/requests');
 var gitCommands = require('../lib/git-create-repo');
 var nodeExec = require('../lib/execs');
+var encode = require('../lib/encrypt').encode;
 var exec = require('child_process').exec;
 var chalk = require('chalk');
 var fs = require('fs');
+var crypto = require('crypto');
+
+var key = crypto.randomBytes(16).toString('base64');
 
 var currentDir = process.cwd();
 var repo = git(currentDir);
@@ -20,7 +24,7 @@ var github = new GitHubApi({
 	version: "3.0.0"
 });
 
-var githubUsername, githubPassword, sessionCookie;
+var githubUsername, githubPassword, codestreamPassword, sessionCookie;
 prompt.start();
 
 //Copies Codestream Sublime Text Plugin
@@ -30,8 +34,9 @@ nodeExec.installSublimePlugin()
 	})
 	.then(function (results) {
 		githubUsername = results.githubUsername;
-		githubPassword = results.githubPassword
-		return requests.loginUser(githubUsername, results.codestreamPassword);
+		githubPassword = encode(results.githubPassword, key);
+		codestreamPassword = encode(results.codestreamPassword, key);
+		return requests.loginUser(githubUsername, codestreamPassword, key);
 	})
 	.then(function (response) {
 		sessionCookie = response.headers['set-cookie'][0];
@@ -52,15 +57,15 @@ nodeExec.installSublimePlugin()
 					return gitCommands.addRemoteToLocal(url, repo, response.newRepoName);
 				})
 				.then(function (repoName) {
-					return requests.createRepo(repoName, githubUsername, githubPassword, sessionCookie);
+					return requests.createRepo(repoName, githubUsername, githubPassword, key, sessionCookie);
 				})
 				.then(function (response) {
 					var filePath = currentDir + '/' + 'codestream.txt';
-					fs.writeFileSync(filePath, 'Auto created by Codestream');
+					fs.writeFileSync(filePath, 'Lecture ' + response.repoId + ' auto created by Codestream');
 					return gitAuto.autoCommit(filePath, repo, response.repoId);
 				})
 				.then(function (repoId) {
-					return requests.cloneRepo(repoId, githubUsername, githubPassword, sessionCookie)
+					return requests.cloneRepo(repoId, githubUsername, githubPassword, key, sessionCookie)
 				})
 				.then(function (repoId) {
 					console.log(chalk.green("Your lecture can be found at http://codestream.co/classroom/" + repoId));

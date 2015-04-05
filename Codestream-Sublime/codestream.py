@@ -50,10 +50,11 @@ class MyEventListener(sublime_plugin.EventListener):
       connection = client.HTTPConnection(url)
       fulltext = view.substr(sublime.Region(0, view.size()))
       pos = view.rowcol(view.sel()[0].begin())
-  
+      variables = view.window().extract_variables()
+
       headers = {'Content-type': 'application/json'}
 
-      update = {'page': fulltext, 'file': view.file_name(), 'line': pos}
+      update = {'page': fulltext, 'file': view.file_name(), 'line': pos, 'folder': variables['folder']}
 
       json_body = json.dumps(update)
 
