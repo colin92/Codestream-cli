@@ -56,7 +56,7 @@ nodeExec.installSublimePlugin()
 				})
 				.then(function (response) {
 					var filePath = currentDir + '/' + 'codestream.txt';
-					fs.writeFileSync(filePath, 'Auto created by Codestream');
+					fs.writeFileSync(filePath, 'Lecture' + response.repoId + 'auto created by Codestream');
 					return gitAuto.autoCommit(filePath, repo, response.repoId);
 				})
 				.then(function (repoId) {
