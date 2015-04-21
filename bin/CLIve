@@ -65,8 +65,11 @@ nodeExec.installSublimePlugin()
 					return gitAuto.autoCommit(filePath, repo, response.repoId);
 				})
 				.then(function (repoId) {
-					return requests.cloneRepo(repoId, githubUsername, githubPassword, key, sessionCookie)
+					return requests.cloneRepo(repoId, githubUsername, githubPassword, key, sessionCookie);
 				})
+        .then(function (repoId) {
+          return nodeExec.updatePluginSettings(repoId);
+        })
 				.then(function (repoId) {
 					console.log(chalk.green("Your lecture can be found at http://codestream.co/classroom/" + repoId));
 					gitAuto.fileWatcher(currentDir, repo); 
@@ -78,6 +81,10 @@ nodeExec.installSublimePlugin()
 		}
 		else {
 			requests.getRepo(response, sessionCookie)
+        .then(function (repoId) {
+          console.log(repoId);
+          return nodeExec.updatePluginSettings(repoId);
+        })
 				.then(function (repoId) {
 					console.log(chalk.green("Your lecture can be found at http://codestream.co/classroom/" + repoId));
 					gitAuto.fileWatcher(currentDir, repo);
