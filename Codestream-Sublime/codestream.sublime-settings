@@ -1,5 +1,3 @@
-// Codestream's default settings.
-
 {
   "codestream_on_modified": false,
   "codestream_url": "codestream.co"

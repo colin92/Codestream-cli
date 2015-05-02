@@ -8,6 +8,7 @@ from http import client
 settings_filename = "codestream.sublime-settings"
 on_modified_field = "codestream_on_modified"
 codestream_url_field = "codestream_url"
+repo_id_field = "repo_id"
 settings = sublime.load_settings(settings_filename)
 
 
@@ -50,11 +51,12 @@ class MyEventListener(sublime_plugin.EventListener):
       connection = client.HTTPConnection(url)
       fulltext = view.substr(sublime.Region(0, view.size()))
       pos = view.rowcol(view.sel()[0].begin())
-      variables = view.window().extract_variables()
+      
+      repoId = settings.get(repo_id_field)
 
       headers = {'Content-type': 'application/json'}
 
-      update = {'page': fulltext, 'file': view.file_name(), 'line': pos, 'folder': variables['folder']}
+      update = {'page': fulltext, 'file': view.file_name(), 'line': pos, 'repoId': repoId }
 
       json_body = json.dumps(update)
 
